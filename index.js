@@ -5,8 +5,6 @@
 
 // "is it working"
 
-
 // asdlkajs
-console.log("usman")
-asdas
-
+console.log("usman");
+asdas;
