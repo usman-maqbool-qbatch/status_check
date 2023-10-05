@@ -35,3 +35,6 @@ jobs: # List of jobs to run as part of the workflow
         uses: wearerequired/lint-action@v2
         with:
           eslint: true
+      
+      - name: Code Linting # Step 4: Run linting checks
+        run: npm run lint # Use the "npm run lint" command to perform linting checks
