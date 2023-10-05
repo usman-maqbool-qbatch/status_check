@@ -1,34 +1,38 @@
-name: Lint
+name: Lint # Name of the GitHub Actions workflow (displayed in GitHub interface)
 
-on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
-  push:
+on: # List of events that trigger the workflow
+  pull_request: # Trigger on a pull request event to specific branches
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+      - staging
 
-jobs:
-  run-linters:
-    name: Run linters
-    runs-on: ubuntu-latest
+env: # Environment variables (available throughout the workflow)
+  NODE_VERSION: 16 # Define the Node.js version to use
 
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v1
+jobs: # List of jobs to run as part of the workflow
+  linting: # Job to perform linting
+    name: Linting # Job name (unique identifier)
+    runs-on: ubuntu-latest # Operating system to run the job on (Ubuntu latest version)
+    steps: # List of steps to execute as part of the job
+      - name: Install Node.js # Step 1: Install Node.js
+        uses: actions/setup-node@v2 # Use the "setup-node" action
         with:
-          node-version: 12
+          node-version: 16.10 # Use the Node.js version specified in the environment variable
 
-      # ESLint and Prettier must be in `package.json`
-      - name: Install Node.js dependencies
-        run: npm ci
+      - name: Code Checkout # Step 2: Check out the code
+        uses: actions/checkout@v2 # Use the "checkout" action
+
+      - name: Install Dependencies # Step 3: Install project dependencies
+        run: npm ci # Use the "npm ci" command to install dependencies (clean install)
+
+      # - name: Code Linting # Step 4: Run linting checks
+      #   run: npm run lint # Use the "npm run lint" command to perform linting checks
+      # - name: Lint Action
+      #   uses: wearerequired/lint-action@v2.3.0
+  
 
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
           eslint: true
+          prettier: true
