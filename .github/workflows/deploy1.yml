@@ -3,7 +3,7 @@ name: Dependent Jobs with Alerts
 on:
   push:
     branches:
-      - main  # Change this to your desired branch
+      - staging  # Change this to your desired branch
 
 jobs:
   job1:
