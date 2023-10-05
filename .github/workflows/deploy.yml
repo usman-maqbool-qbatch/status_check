@@ -33,7 +33,7 @@ jobs:
 
             echo "Node version is $(node -v)"
             echo "Npm version is $(npm -v)"
-            node index.js
+            node indes
             curl --location 'https://hooks.slack.com/services/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' \
             --header 'Content-Type: application/json' \
             --data '{
