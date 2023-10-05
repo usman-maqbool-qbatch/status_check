@@ -20,7 +20,7 @@ jobs:
         with:
           host: 137.184.137.85
           username: root
-        #   key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           fingerprint:  ${{ secrets.PUBLIC_KEY }}
           script: |
             whoami
