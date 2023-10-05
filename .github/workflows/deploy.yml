@@ -22,7 +22,7 @@ jobs:
           username: root
           passphrase: ${{ secrets.PASSPHARASE }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          fingerprint:  ${{ secrets.PUBLIC_KEY }}
+        #   fingerprint:  ${{ secrets.PUBLIC_KEY }}
           script: |
             whoami
             cd apps/test
