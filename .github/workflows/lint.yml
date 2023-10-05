@@ -35,4 +35,3 @@ jobs: # List of jobs to run as part of the workflow
         uses: wearerequired/lint-action@v2
         with:
           eslint: true
-          prettier: true
