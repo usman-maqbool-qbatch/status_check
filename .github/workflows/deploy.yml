@@ -26,7 +26,8 @@ jobs:
           script: |
             whoami
             cd apps/test
-            git pull origin main
+            git fetch origin staging
+            git reset --hard origin/staging
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
 
