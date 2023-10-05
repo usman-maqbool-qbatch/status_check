@@ -1,11 +1,11 @@
-var abce ='usman'
+// var abce ='usman'
 
-asdasd
-aslkdjasl
+// asdasd
+// aslkdjasl
 
-"is it working"
+// "is it working"
 
 
-asdlkajs
+// asdlkajs
 console.log("usman")
 
