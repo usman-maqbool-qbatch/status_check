@@ -11,8 +11,8 @@ on:
       - main
 
 permissions:
-  checks: write
-  contents: write
+    checks: write
+    contents: write
 
 jobs:
   run-linters:
@@ -36,4 +36,3 @@ jobs:
         uses: wearerequired/lint-action@v2
         with:
           eslint: true
-          prettier: false
