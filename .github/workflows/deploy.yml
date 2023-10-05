@@ -20,7 +20,6 @@ jobs:
         with:
           host: 137.184.137.85
           username: root
-        #   passphrase: ${{ secrets.PHRASE }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             whoami
