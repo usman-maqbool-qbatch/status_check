@@ -32,5 +32,5 @@ jobs:
 
             echo "Node version is $(node -v)"
             echo "Npm version is $(npm -v)"
-            # pm2 restart test
+            node index.js
             # Add any other necessary deployment commands test_2.5
