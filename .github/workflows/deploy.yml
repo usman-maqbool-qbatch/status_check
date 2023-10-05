@@ -22,7 +22,6 @@ jobs:
           username: root
           passphrase: ${{ secrets.PASSPHARASE }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-        #   fingerprint:  ${{ secrets.PUBLIC_KEY }}
           script: |
             whoami
             cd apps/test
@@ -41,12 +40,14 @@ jobs:
         if: failure()
         run: |
             echo "Deployment failed, sending cURL request..."
-            echo "Dailure ${{job.status}}"
-            curl http://137.184.137.85:5001/api
-            echo "This is an error message" >&2
+            echo "Failure ${{job.status}}"
+            curl http://137.184.137.85:5001/api/error
+            echo "Actor ${{github.actor}}"
 
       - name: Send cURL Request on Success
         if: success()
         run: |
             echo "Deployment success, sending cURL request..."
+            echo "Actor ${{github.actor}}"
+            curl http://137.184.137.85:5001/api/success
             echo "Success ${{job.status}}"
