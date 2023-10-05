@@ -1,0 +1,34 @@
+name: Deploy to SSH Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Deploy to SSH server
+        uses: appleboy/ssh-action@master
+        with:
+          host: 137.184.137.85
+          username: root
+          passphrase: ${{ secrets.PHRASE }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            whoami
+            cd apps/test
+            git pull origin main
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+
+            echo "Node version is $(node -v)"
+            echo "Npm version is $(npm -v)"
+            # pm2 restart test
+            # Add any other necessary deployment commands test_2.5
