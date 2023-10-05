@@ -48,7 +48,7 @@ jobs:
             echo "Deployment failed, sending cURL request..."
             echo "Success ${{job.status}}"
 
-      - name: Send cURL Request on Error
+      - name: Send cURL Request on Success
         if: success()
         run: |
             echo "Deployment failed, sending cURL request..."
