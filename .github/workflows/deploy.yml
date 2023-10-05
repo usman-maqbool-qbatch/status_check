@@ -18,7 +18,7 @@ jobs:
       - name: Deploy to SSH server
         uses: appleboy/ssh-action@master
         with:
-          host: 137.184.137.5
+          host: 137.184.137.85
           username: root
           passphrase: ${{ secrets.PASSPHARASE }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -41,12 +41,12 @@ jobs:
         if: failure()
         run: |
             echo "Deployment failed, sending cURL request..."
-            echo "Success ${{job.status}}"
+            echo "Dailure ${{job.status}}"
             curl http://137.184.137.85:5001/api
             echo "This is an error message" >&2
 
       - name: Send cURL Request on Success
         if: success()
         run: |
-            echo "Deployment failed, sending cURL request..."
+            echo "Deployment success, sending cURL request..."
             echo "Success ${{job.status}}"
