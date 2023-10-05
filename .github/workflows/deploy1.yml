@@ -49,6 +49,6 @@ jobs:
     if: ${{ success() }}  # Only run the alert job if any of the previous jobs fail
     steps:
       - name: Success Alert
-        run: echo "One or more jobs Success, sending alert!"
+        run: echo "One or more jobs Success, sending alert! ${{ github.actor }}"
     
         
