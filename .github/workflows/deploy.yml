@@ -33,12 +33,7 @@ jobs:
 
             echo "Node version is $(node -v)"
             echo "Npm version is $(npm -v)"
-            node indes
-            curl --location 'https://hooks.slack.com/services/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' \
-            --header 'Content-Type: application/json' \
-            --data '{
-                "text":"JOB success ${{github.triggering_actor}}"
-            }'
+            node index.js
 
             # Add any other necessary deployment commands test_2.5
 
@@ -47,6 +42,7 @@ jobs:
         run: |
             echo "Deployment failed, sending cURL request..."
             echo "Success ${{job.status}}"
+            curl http://137.184.137.85:5001/api
 
       - name: Send cURL Request on Success
         if: success()
