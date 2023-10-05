@@ -18,7 +18,7 @@ jobs:
       - name: Deploy to SSH server
         uses: appleboy/ssh-action@master
         with:
-          host: 137.184.137.8
+          host: 137.184.137.5
           username: root
           passphrase: ${{ secrets.PASSPHARASE }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -46,8 +46,10 @@ jobs:
         if: failure()
         run: |
             echo "Deployment failed, sending cURL request..."
-            curl --location 'https://hooks.slack.com/services/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' \
-            --header 'Content-Type: application/json' \
-            --data '{
-                "text":"An Error occured"
-            }'
+            echo "Success ${{job.status}}"
+
+      - name: Send cURL Request on Error
+        if: success()
+        run: |
+            echo "Deployment failed, sending cURL request..."
+            echo "Success ${{job.status}}"
