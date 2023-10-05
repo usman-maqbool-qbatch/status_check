@@ -1,4 +1,8 @@
-const abce ='usman'
+var abce ='usman'
 
-console.log("usman", abce)
+asdasd
+
+"is it working"
+
+console.log("usman")
 
