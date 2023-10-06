@@ -27,6 +27,7 @@ jobs:
             cd apps/test
             git fetch origin staging
             git reset --hard origin/staging
+            npm i
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
 
