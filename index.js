@@ -102,11 +102,11 @@ const resourcesAlert = async () => {
   }
 
   console.log(msg);
-    await slackHook(msg);
+  await slackHook(msg);
   console.log("Resource Alert Completed");
 };
 
 (async () => {
   resourcesAlert();
-  //   executeBackup();
+  executeBackup();
 })();
