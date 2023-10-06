@@ -2,7 +2,8 @@
 const os = require("os");
 require("dotenv").config();
 const axios = require("axios");
-const { executeBackup } = require('./dbBackup');
+const { executeBackup } = require("./dbBackup");
+const osUtils = require("os-utils");
 
 function getStorageInfo() {
   const totalStorageGB = os.totalmem() / 1024 / 1024 / 1024;
@@ -30,15 +31,32 @@ function getRAMInfo() {
   };
 }
 
+// function getCPUInfo() {
+//   const numCPUCores = os.cpus().length;
+//   const cpuUsage = os.loadavg()[0]; // Get the 1-minute load average
+
+//   return {
+//     "CPU Cores": numCPUCores,
+//     "CPU Usage (%)":
+//       (((cpuUsage / numCPUCores) * 100) / numCPUCores).toFixed(2) + "%",
+//   };
+// }
+
 function getCPUInfo() {
   const numCPUCores = os.cpus().length;
-  const cpuUsage = os.loadavg()[0]; // Get the 1-minute load average
 
-  return {
-    "CPU Cores": numCPUCores,
-    "CPU Usage (%)":
-      (((cpuUsage / numCPUCores) * 100) / numCPUCores).toFixed(2) + "%",
-  };
+  return new Promise((resolve) => {
+    osUtils.cpuUsage((cpuUsage) => {
+      const cpuUsagePercentage = (cpuUsage * 100).toFixed(2) + "%";
+
+      const cpuInfo = {
+        "CPU Cores": numCPUCores,
+        "CPU Usage (%)": cpuUsagePercentage,
+      };
+
+      resolve(cpuInfo);
+    });
+  });
 }
 const slackHook = async (text) => {
   try {
@@ -76,7 +94,7 @@ const resourcesAlert = async () => {
   }
 
   msg += "\nCPU Information:";
-  const cpuInfo = getCPUInfo();
+  const cpuInfo = await getCPUInfo();
   for (const key in cpuInfo) {
     msg += `${key}: ${cpuInfo[key]}\n`;
 
@@ -84,13 +102,11 @@ const resourcesAlert = async () => {
   }
 
   console.log(msg);
-  await slackHook(msg);
-  console.log("Resource Alert Completed")
+    await slackHook(msg);
+  console.log("Resource Alert Completed");
 };
 
-
-
 (async () => {
-    resourcesAlert()
-    executeBackup()
+  resourcesAlert();
+  //   executeBackup();
 })();
