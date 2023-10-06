@@ -8,7 +8,6 @@ function getStorageInfo() {
   const usedStoragePercentage = (usedStorageGB / totalStorageGB) * 100;
 
   return {
-    'Total Storage (%)': '100%',
     'Used Storage (%)': usedStoragePercentage.toFixed(2) + '%',
     'Free Storage (%)': (100 - usedStoragePercentage).toFixed(2) + '%',
   };
@@ -22,7 +21,6 @@ function getRAMInfo() {
   const usedRAMPercentage = (usedRAMGB / totalRAMGB) * 100;
 
   return {
-    'Total RAM (%)': '100%',
     'Used RAM (%)': usedRAMPercentage.toFixed(2) + '%',
     'Free RAM (%)': (100 - usedRAMPercentage).toFixed(2) + '%',
   };
@@ -34,7 +32,7 @@ function getCPUInfo() {
   
     return {
       'CPU Cores': numCPUCores,
-      'CPU Usage (%)': (cpuUsage / numCPUCores * 100).toFixed(2) + '%',
+      'CPU Usage (%)': ((cpuUsage / numCPUCores * 100)/numCPUCores).toFixed(2) + '%',
     };
   }
 

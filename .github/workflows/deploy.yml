@@ -34,24 +34,6 @@ jobs:
             echo "Npm version is $(npm -v)"
             node index.js
 
-            # Add any other necessary deployment commands test_2.5
-
-    #   - name: Send cURL Request on Error
-    #     if: failure()
-    #     run: |
-    #         echo "Deployment failed, sending cURL request..."
-    #         echo "Failure ${{job.status}}"
-    #         curl http://137.184.137.85:5001/api/error
-    #         echo "Actor ${{github.actor}}"
-
-    #   - name: Send cURL Request on Success
-    #     if: success()
-    #     run: |
-    #         echo "Deployment success, sending cURL request..."
-    #         echo "Actor ${{github.actor}}"
-    #         curl http://137.184.137.85:5001/api/success
-    #         echo "Success ${{job.status}}"
-
 
 
   success_alert:
