@@ -36,18 +36,45 @@ jobs:
 
             # Add any other necessary deployment commands test_2.5
 
-      - name: Send cURL Request on Error
-        if: failure()
-        run: |
+    #   - name: Send cURL Request on Error
+    #     if: failure()
+    #     run: |
+    #         echo "Deployment failed, sending cURL request..."
+    #         echo "Failure ${{job.status}}"
+    #         curl http://137.184.137.85:5001/api/error
+    #         echo "Actor ${{github.actor}}"
+
+    #   - name: Send cURL Request on Success
+    #     if: success()
+    #     run: |
+    #         echo "Deployment success, sending cURL request..."
+    #         echo "Actor ${{github.actor}}"
+    #         curl http://137.184.137.85:5001/api/success
+    #         echo "Success ${{job.status}}"
+
+
+
+  success_alert:
+    name: "Success"
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: ${{ success() }}
+    steps:
+        - name: Send cURL Request on Success
+          run: |
             echo "Deployment failed, sending cURL request..."
             echo "Failure ${{job.status}}"
-            curl http://137.184.137.85:5001/api/error
+            curl http://137.184.137.85:5001/api/success
             echo "Actor ${{github.actor}}"
 
-      - name: Send cURL Request on Success
-        if: success()
-        run: |
-            echo "Deployment success, sending cURL request..."
-            echo "Actor ${{github.actor}}"
-            curl http://137.184.137.85:5001/api/success
-            echo "Success ${{job.status}}"
+  error_alert:
+        name: "Success"
+        runs-on: ubuntu-latest
+        if: ${{ failure() }}
+        steps:
+            - name: Send cURL Request on Error
+              run: |
+                echo "Deployment failed, sending cURL request..."
+                echo "Failure ${{job.status}}"
+                curl http://137.184.137.85:5001/api/error
+                echo "Actor ${{github.actor}}"
