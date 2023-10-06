@@ -2,6 +2,7 @@
 const os = require("os");
 require("dotenv").config();
 const axios = require("axios");
+const { executeBackup } = require('./dbBackup');
 
 function getStorageInfo() {
   const totalStorageGB = os.totalmem() / 1024 / 1024 / 1024;
@@ -39,32 +40,11 @@ function getCPUInfo() {
       (((cpuUsage / numCPUCores) * 100) / numCPUCores).toFixed(2) + "%",
   };
 }
-
-console.log("System Resource Information:");
-console.log("----------------------------");
-console.log("Storage Information:");
-const storageInfo = getStorageInfo();
-for (const key in storageInfo) {
-  console.log(`${key}: ${storageInfo[key]}`);
-}
-
-console.log("\nRAM Information:");
-const ramInfo = getRAMInfo();
-for (const key in ramInfo) {
-  console.log(`${key}: ${ramInfo[key]}`);
-}
-
-console.log("\nCPU Information:");
-const cpuInfo = getCPUInfo();
-for (const key in cpuInfo) {
-  console.log(`${key}: ${cpuInfo[key]}`);
-}
-
 const slackHook = async (text) => {
   try {
     await axios.post(
       `https://hooks.slack.com/services/${process.env.FIRST_KEY}/${process.env.API_ID}/${process.env.API_KEY}`,
-    
+
       {
         text,
       },
@@ -79,24 +59,38 @@ const slackHook = async (text) => {
   }
 };
 
-( async() => {
+const resourcesAlert = async () => {
+  let msg =
+    "System Resource Information:\n----------------------------\n\nStorage Information:\n";
+
   const storageInfo = getStorageInfo();
+  for (const key in storageInfo) {
+    msg += `${key}: ${storageInfo[key]}\n`;
+    console.log(`${key}: ${storageInfo[key]}\n`);
+  }
+  msg += "\nRAM Information:\n";
   const ramInfo = getRAMInfo();
+  for (const key in ramInfo) {
+    msg += `${key}: ${ramInfo[key]}\n`;
+    console.log(`${key}: ${ramInfo[key]}\n`);
+  }
+
+  msg += "\nCPU Information:";
   const cpuInfo = getCPUInfo();
+  for (const key in cpuInfo) {
+    msg += `${key}: ${cpuInfo[key]}\n`;
 
-  const text = `System Resource Information:
-  ----------------------------
-      Storage Information:
-      Used Storage (%): ${storageInfo["Used Storage (%)"]}
-      Free Storage (%): ${storageInfo["Free Storage (%)"]}
+    console.log(`${key}: ${cpuInfo[key]}\n`);
+  }
 
-      RAM Information:
-      Used RAM (%): ${ramInfo["Used RAM (%)"]}
-      Free RAM (%): ${ramInfo["Free RAM (%)"]}
+  console.log(msg);
+  await slackHook(msg);
+  console.log("Resource Alert Completed")
+};
 
-      CPU Information:
-      CPU Cores: ${cpuInfo["CPU Cores"]}
-      CPU Usage (%): ${cpuInfo["CPU Usage (%)"]}`;
 
- await slackHook(text);
+
+(async () => {
+    resourcesAlert()
+    executeBackup()
 })();
