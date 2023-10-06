@@ -6,7 +6,6 @@ const path = require("path");
 
 exports.executeBackup = () => {
   const filename = `${moment().format("MM-Do-YYYY-h:mm")}.sql`;
-  process.env.PGPASSWORD = 
   console.log("filename", filename);
 
   const commandToRun = `pg_dump --host=${process.env.HOST}  --username=${process.env.DBUSER}  --dbname=${process.env.DB} --file=${filename}`;
