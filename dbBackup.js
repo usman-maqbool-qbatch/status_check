@@ -9,7 +9,7 @@ exports.executeBackup = () => {
 
   console.log("filename", filename);
 
-  const commandToRun = `pg_dump --host=${process.env.HOST}  --username=${process.env.DBUSER} --password=${process.env.PASSWORD} --dbname=${process.env.DB} --file=${filename}`;
+  const commandToRun = `pg_dump --host=${process.env.HOST}  --username=${process.env.DBUSER} --password=${process.env.DBPASSWORD} --dbname=${process.env.DB} --file=${filename}`;
   exec(commandToRun, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error: ${error.message}`);
