@@ -84,21 +84,17 @@ const resourcesAlert = async () => {
   const storageInfo = getStorageInfo();
   for (const key in storageInfo) {
     msg += `${key}: ${storageInfo[key]}\n`;
-    console.log(`${key}: ${storageInfo[key]}\n`);
   }
   msg += "\nRAM Information:\n";
   const ramInfo = getRAMInfo();
   for (const key in ramInfo) {
     msg += `${key}: ${ramInfo[key]}\n`;
-    console.log(`${key}: ${ramInfo[key]}\n`);
   }
 
   msg += "\nCPU Information:";
   const cpuInfo = await getCPUInfo();
   for (const key in cpuInfo) {
     msg += `${key}: ${cpuInfo[key]}\n`;
-
-    console.log(`${key}: ${cpuInfo[key]}\n`);
   }
 
   console.log(msg);
