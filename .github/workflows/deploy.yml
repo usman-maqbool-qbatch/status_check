@@ -18,7 +18,7 @@ jobs:
       - name: Deploy to SSH server
         uses: appleboy/ssh-action@master
         with:
-          host: 137.184.137.85
+          host: 137.184.137.8
           username: root
           passphrase: ${{ secrets.PASSPHARASE }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -68,7 +68,7 @@ jobs:
             echo "Actor ${{github.actor}}"
 
   error_alert:
-        name: "Success"
+        name: "Error"
         runs-on: ubuntu-latest
         if: ${{ failure() }}
         steps:
