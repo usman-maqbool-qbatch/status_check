@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     name: "Deployment"
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Set up Node.js
@@ -39,7 +39,7 @@ jobs:
 
   success_alert:
     name: "Success"
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: deploy
     if: success() 
     steps:
@@ -52,7 +52,7 @@ jobs:
 
   error_alert:
         name: "Error"
-        runs-on: ubuntu-latest
+        runs-on: self-hosted
         needs: deploy
         if: failure()
         steps:
