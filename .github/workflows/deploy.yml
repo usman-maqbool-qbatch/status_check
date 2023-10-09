@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     name: "Deployment"
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Set up Node.js
@@ -16,11 +16,11 @@ jobs:
         with:
           node-version: '18'
       - name: Deploy to SSH server
-        uses: docker://appleboy/ssh-action:master
+        uses: appleboy/ssh-action@master
         with:
           host: 137.184.137.85
           username: root
-          passphrase: ${{ secrets.PASSPHARASE }}
+        #   passphrase: ${{ secrets.PASSPHARASE }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             whoami
