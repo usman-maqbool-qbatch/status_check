@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: '18'
       - name: Deploy to SSH server
-        uses: appleboy/ssh-action@master
+        uses: docker://appleboy/ssh-action:master
         with:
           host: 137.184.137.85
           username: root
