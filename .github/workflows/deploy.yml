@@ -8,32 +8,39 @@ on:
 jobs:
   deploy:
     name: "Deployment"
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '18'
-      - name: Deploy to SSH server
-        uses: appleboy/ssh-action@master
-        with:
-          host: 137.184.137.85
-          username: root
-          passphrase: ${{ secrets.PASSPHARASE }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            whoami
-            cd apps/test
-            git fetch origin staging
-            git reset --hard origin/staging
-            export NVM_DIR=~/.nvm
-            source ~/.nvm/nvm.sh
-            npm i
+      - name: Local deployment
+        env:
+         SSH_PASSPHRASE: ${{ secrets.PASSPHARASE }}
+        run: |
+            eval "$(ssh-agent -s)" 
+            echo "$SSH_PASSPHRASE" | ssh-add -k - ${{ secrets.SSH_PRIVATE_KEY }}
+            ssh root@137.184.137.85
+    #   - name: Deploy to SSH server
+    #     uses: appleboy/ssh-action@master
+    #     with:
+    #       host: 137.184.137.85
+    #       username: root
+    #       passphrase: ${{ secrets.PASSPHARASE }}
+    #       key: ${{ secrets.SSH_PRIVATE_KEY }}
+    #       script: |
+    #         whoami
+    #         cd apps/test
+    #         git fetch origin staging
+    #         git reset --hard origin/staging
+    #         export NVM_DIR=~/.nvm
+    #         source ~/.nvm/nvm.sh
+    #         npm i
             
-            echo "Node version is $(node -v)"
-            echo "Npm version is $(npm -v)"
-            node index.js
+    #         echo "Node version is $(node -v)"
+    #         echo "Npm version is $(npm -v)"
+    #         node index.js
 
 
 
